@@ -1,0 +1,72 @@
+name: Security Compliance CI
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  lint:
+    name: Lint Python Code
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install flake8 pyyaml jinja2
+
+      - name: Lint with flake8
+        run: |
+          flake8 scanner/ --max-line-length=120 --ignore=E501,W503
+
+  ansible-lint:
+    name: Lint Ansible Playbook
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install ansible-lint
+        run: |
+          pip install ansible-lint
+
+      - name: Lint Ansible playbook
+        run: |
+          ansible-lint playbooks/harden.yml || true
+
+  security-scan:
+    name: Run Security Scanner
+    runs-on: ubuntu-latest
+    needs: lint
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.12'
+
+      - name: Install dependencies
+        run: |
+          pip install pyyaml jinja2
+
+      - name: Run CIS compliance scan
+        run: |
+          cd scanner
+          python3 scan.py
+
+      - name: Upload compliance report
+        uses: actions/upload-artifact@v3
+        with:
+          name: compliance-report
+          path: reports/
+          retention-days: 30

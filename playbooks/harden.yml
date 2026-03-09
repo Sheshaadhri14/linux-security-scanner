@@ -1,0 +1,153 @@
+---
+- name: Linux CIS Benchmark Auto-Hardening Playbook
+  hosts: localhost
+  become: yes
+  vars:
+    ssh_config: /etc/ssh/sshd_config
+    limits_config: /etc/security/limits.conf
+    login_defs: /etc/login.defs
+    sudoers_file: /etc/sudoers
+
+  tasks:
+
+    # ── CIS-5.2.8 — Disable SSH Root Login ──────────────────────
+    - name: "CIS-5.2.8 | Disable SSH root login"
+      lineinfile:
+        path: "{{ ssh_config }}"
+        regexp: '^#?PermitRootLogin'
+        line: 'PermitRootLogin no'
+        state: present
+        backup: yes
+      notify: Restart SSH
+
+    # ── CIS-5.2.9 — Disable SSH Empty Passwords ─────────────────
+    - name: "CIS-5.2.9 | Disable empty passwords over SSH"
+      lineinfile:
+        path: "{{ ssh_config }}"
+        regexp: '^#?PermitEmptyPasswords'
+        line: 'PermitEmptyPasswords no'
+        state: present
+        backup: yes
+      notify: Restart SSH
+
+    # ── CIS-5.4.1.1 — Password Max Age ──────────────────────────
+    - name: "CIS-5.4.1.1 | Set password maximum age to 90 days"
+      lineinfile:
+        path: "{{ login_defs }}"
+        regexp: '^PASS_MAX_DAYS'
+        line: 'PASS_MAX_DAYS   90'
+        state: present
+
+    # ── CIS-5.4.1 — Password Min Length ─────────────────────────
+    - name: "CIS-5.4.1 | Set minimum password length to 14"
+      lineinfile:
+        path: "{{ login_defs }}"
+        regexp: '^PASS_MIN_LEN'
+        line: 'PASS_MIN_LEN    14'
+        state: present
+
+    # ── CIS-1.5.1 — Restrict Core Dumps ─────────────────────────
+    - name: "CIS-1.5.1 | Restrict core dumps for all users"
+      lineinfile:
+        path: "{{ limits_config }}"
+        line: '* hard core 0'
+        state: present
+
+    - name: "CIS-1.5.1 | Disable core dumps via sysctl"
+      sysctl:
+        name: fs.suid_dumpable
+        value: '0'
+        state: present
+        reload: yes
+
+    # ── CIS-5.3.4 — Enable Sudo Logging ─────────────────────────
+    - name: "CIS-5.3.4 | Enable sudo activity logging"
+      lineinfile:
+        path: "{{ sudoers_file }}"
+        line: 'Defaults logfile=/var/log/sudo.log'
+        validate: '/usr/sbin/visudo -cf %s'
+        state: present
+
+    # ── CIS-5.1.2 — Restrict Cron to Authorized Users ───────────
+    - name: "CIS-5.1.2 | Create /etc/cron.allow to restrict cron"
+      file:
+        path: /etc/cron.allow
+        state: touch
+        owner: root
+        group: root
+        mode: '0600'
+
+    - name: "CIS-5.1.2 | Remove /etc/cron.deny if exists"
+      file:
+        path: /etc/cron.deny
+        state: absent
+
+    # ── CIS-1.1.8 — Sticky Bit on /tmp ──────────────────────────
+    - name: "CIS-1.1.8 | Ensure sticky bit is set on /tmp"
+      file:
+        path: /tmp
+        mode: '1777'
+        state: directory
+
+    # ── CIS-4.1.1 — Ensure auditd is enabled ────────────────────
+    - name: "CIS-4.1.1 | Ensure auditd is installed"
+      apt:
+        name: auditd
+        state: present
+        update_cache: yes
+
+    - name: "CIS-4.1.1 | Ensure auditd is enabled and running"
+      service:
+        name: auditd
+        state: started
+        enabled: yes
+
+    # ── CIS-4.2.1 — Ensure rsyslog is running ───────────────────
+    - name: "CIS-4.2.1 | Ensure rsyslog is installed"
+      apt:
+        name: rsyslog
+        state: present
+
+    - name: "CIS-4.2.1 | Ensure rsyslog is enabled and running"
+      service:
+        name: rsyslog
+        state: started
+        enabled: yes
+
+    # ── CIS-1.7.4 — Create /etc/motd ────────────────────────────
+    - name: "CIS-1.7.4 | Create /etc/motd with security banner"
+      copy:
+        dest: /etc/motd
+        content: |
+          ********************************************************************
+          *  AUTHORIZED ACCESS ONLY                                          *
+          *  All activity on this system is monitored and logged.            *
+          *  Unauthorized access will be prosecuted to the full extent       *
+          *  of applicable law.                                              *
+          ********************************************************************
+        owner: root
+        group: root
+        mode: '0644'
+
+    # ── Hardening Summary ────────────────────────────────────────
+    - name: "Hardening complete — print summary"
+      debug:
+        msg: |
+          ✔ SSH root login    → DISABLED
+          ✔ Empty passwords   → BLOCKED
+          ✔ Password max age  → 90 days
+          ✔ Password min len  → 14 chars
+          ✔ Core dumps        → RESTRICTED
+          ✔ Sudo logging      → ENABLED at /var/log/sudo.log
+          ✔ Cron access       → RESTRICTED
+          ✔ Sticky bit /tmp   → SET
+          ✔ auditd            → RUNNING
+          ✔ rsyslog           → RUNNING
+          ✔ MOTD banner       → CREATED
+
+  handlers:
+    - name: Restart SSH
+      service:
+        name: ssh
+        state: restarted
+      ignore_errors: yes

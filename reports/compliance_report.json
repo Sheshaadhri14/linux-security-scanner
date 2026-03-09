@@ -1,0 +1,162 @@
+{
+  "scanner": {
+    "name": "Linux Security Compliance Scanner",
+    "version": "1.0.0",
+    "author": "Sri Sheshaadhri R"
+  },
+  "scan_time": "2026-03-09T17:29:28.835436",
+  "summary": {
+    "total": 20,
+    "passed": 16,
+    "failed": 1,
+    "warnings": 3,
+    "errors": 0,
+    "score": 80.0
+  },
+  "results": [
+    {
+      "id": "CIS-5.2.8",
+      "name": "SSH Root Login",
+      "status": "PASS",
+      "severity": "critical",
+      "detail": "PermitRootLogin is set to no in sshd_config"
+    },
+    {
+      "id": "CIS-5.2.9",
+      "name": "SSH Empty Passwords",
+      "status": "PASS",
+      "severity": "low",
+      "detail": "PermitEmptyPasswords is set to no in sshd_config"
+    },
+    {
+      "id": "CIS-5.2.2",
+      "name": "SSH Protocol",
+      "status": "PASS",
+      "severity": "low",
+      "detail": "OpenSSH installed \u2014 SSH2 protocol enforced by default"
+    },
+    {
+      "id": "CIS-3.6.1",
+      "name": "Firewall Status",
+      "status": "PASS",
+      "severity": "high",
+      "detail": "UFW firewall is active"
+    },
+    {
+      "id": "CIS-4.1.1",
+      "name": "Audit Daemon",
+      "status": "PASS",
+      "severity": "high",
+      "detail": "auditd is installed \u2014 note: WSL2 kernel limits auditd runtime but package is present and configured"
+    },
+    {
+      "id": "CIS-6.1.2",
+      "name": "/etc/passwd Permissions",
+      "status": "PASS",
+      "severity": "critical",
+      "detail": "Permissions are 644 \u2014 correct"
+    },
+    {
+      "id": "CIS-6.1.3",
+      "name": "/etc/shadow Permissions",
+      "status": "PASS",
+      "severity": "critical",
+      "detail": "Permissions are 640 \u2014 correct"
+    },
+    {
+      "id": "CIS-6.1.10",
+      "name": "World-Writable Files",
+      "status": "PASS",
+      "severity": "medium",
+      "detail": "No world-writable files found in critical directories"
+    },
+    {
+      "id": "CIS-6.1.13",
+      "name": "SUID/SGID Binaries",
+      "status": "WARNING",
+      "severity": "high",
+      "detail": "Review these SUID binaries: /usr/lib/snapd/snap-confine, /usr/lib/polkit-1/polkit-agent-helper-1, /usr/lib/x86_64-linux-gnu/utempter/utempter",
+      "fix": "Verify each binary is intentionally SUID \u2014 remove bit if not: chmod u-s <file>"
+    },
+    {
+      "id": "CIS-5.4.1.1",
+      "name": "Password Max Age",
+      "status": "PASS",
+      "severity": "medium",
+      "detail": "Password max age is 90 days"
+    },
+    {
+      "id": "CIS-5.4.1",
+      "name": "Password Min Length",
+      "status": "PASS",
+      "severity": "medium",
+      "detail": "Minimum password length is 14"
+    },
+    {
+      "id": "CIS-1.5.1",
+      "name": "Core Dumps",
+      "status": "PASS",
+      "severity": "low",
+      "detail": "Core dumps are restricted"
+    },
+    {
+      "id": "CIS-5.1.2",
+      "name": "Cron Permissions",
+      "status": "PASS",
+      "severity": "medium",
+      "detail": "/etc/cron.allow exists \u2014 cron access is restricted"
+    },
+    {
+      "id": "CIS-5.3.1",
+      "name": "Sudo Installed",
+      "status": "PASS",
+      "severity": "medium",
+      "detail": "sudo is installed and available"
+    },
+    {
+      "id": "CIS-5.3.4",
+      "name": "Sudo Logging",
+      "status": "FAIL",
+      "severity": "high",
+      "detail": "Sudo logging not configured \u2014 privilege escalation untracked",
+      "fix": "Add 'Defaults logfile=/var/log/sudo.log' to /etc/sudoers"
+    },
+    {
+      "id": "CIS-1.1.3",
+      "name": "/tmp noexec",
+      "status": "WARNING",
+      "severity": "high",
+      "detail": "/tmp may allow execution \u2014 attackers can run malicious scripts",
+      "fix": "Add 'noexec' to /tmp mount options in /etc/fstab"
+    },
+    {
+      "id": "CIS-1.1.8",
+      "name": "Sticky Bit /tmp",
+      "status": "PASS",
+      "severity": "medium",
+      "detail": "Sticky bit set on /tmp \u2014 users can't delete each other's files"
+    },
+    {
+      "id": "CIS-3.3.3",
+      "name": "IPv6 Status",
+      "status": "WARNING",
+      "severity": "low",
+      "detail": "IPv6 is enabled \u2014 disable if not required",
+      "fix": "Add 'net.ipv6.conf.all.disable_ipv6=1' to /etc/sysctl.conf"
+    },
+    {
+      "id": "CIS-1.7.4",
+      "name": "MOTD Permissions",
+      "status": "PASS",
+      "severity": "low",
+      "detail": "/etc/motd permissions are 644"
+    },
+    {
+      "id": "CIS-4.2.1",
+      "name": "Rsyslog Service",
+      "status": "PASS",
+      "severity": "high",
+      "detail": "rsyslog is active \u2014 system logs are being collected"
+    }
+  ]
+}

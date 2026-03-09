@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Linux Security Compliance Report</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{font-family:'Segoe UI',Arial,sans-serif;background:#0d1117;color:#c9d1d9}
+  header{background:linear-gradient(135deg,#161b22,#21262d);padding:40px;border-bottom:3px solid #cc0000}
+  header h1{font-size:2rem;color:#fff;letter-spacing:2px}
+  header p{color:#8b949e;margin-top:6px;font-size:.9rem}
+  .meta{display:flex;gap:12px;margin-top:16px;flex-wrap:wrap}
+  .meta span{background:#21262d;padding:6px 14px;border-radius:20px;font-size:.8rem;color:#8b949e}
+  .scorecard{display:flex;gap:20px;padding:30px 40px;flex-wrap:wrap;background:#161b22;border-bottom:1px solid #30363d}
+  .card{background:#21262d;border-radius:12px;padding:24px 32px;text-align:center;flex:1;min-width:140px;border:1px solid #30363d}
+  .card .num{font-size:2.4rem;font-weight:700;line-height:1}
+  .card .lbl{font-size:.8rem;color:#8b949e;margin-top:6px;text-transform:uppercase;letter-spacing:1px}
+  .progress-wrap{padding:20px 40px;background:#161b22}
+  .progress-bar{height:14px;background:#30363d;border-radius:8px;overflow:hidden}
+  .progress-fill{height:100%;border-radius:8px;background:linear-gradient(90deg,#cc0000,#ff6b6b);transition:width .6s ease}
+  .progress-label{display:flex;justify-content:space-between;margin-top:6px;font-size:.8rem;color:#8b949e}
+  .container{padding:30px 40px}
+  table{width:100%;border-collapse:collapse;background:#161b22;border-radius:12px;overflow:hidden;border:1px solid #30363d}
+  th{background:#21262d;padding:14px 16px;text-align:left;font-size:.8rem;text-transform:uppercase;letter-spacing:1px;color:#8b949e;border-bottom:1px solid #30363d}
+  td{padding:14px 16px;border-bottom:1px solid #21262d;font-size:.88rem;vertical-align:top}
+  tr:hover td{background:#1c2128}
+  tr:last-child td{border-bottom:none}
+  .badge{padding:3px 10px;border-radius:12px;font-size:.75rem;font-weight:700;letter-spacing:.5px}
+  .pass{background:#0d4429;color:#3fb950}
+  .fail{background:#3d0b0b;color:#f85149}
+  .warning{background:#3d2b00;color:#e3b341}
+  .error{background:#2d1b4e;color:#bc8cff}
+  .fix{margin-top:6px;font-size:.8rem;color:#8b949e}
+  code{background:#21262d;padding:2px 6px;border-radius:4px;font-size:.8rem;color:#79c0ff}
+  footer{text-align:center;padding:24px;color:#484f58;font-size:.8rem;border-top:1px solid #21262d}
+</style>
+</head>
+<body>
+<header>
+  <h1>🔐 Linux Security Compliance Report</h1>
+  <p>Linux Security Compliance Scanner v1.0.0 — Built by Sri Sheshaadhri R</p>
+  <div class="meta">
+    <span>📅 2026-03-09T17:29:28.835436</span>
+    <span>📋 CIS Benchmark Controls</span>
+    <span style="color:#27ae60;font-weight:700">⚠ LOW RISK</span>
+  </div>
+</header>
+
+<div class="scorecard">
+  <div class="card"><div class="num" style="color:#27ae60">80.0%</div><div class="lbl">Compliance Score</div></div>
+  <div class="card"><div class="num" style="color:#3fb950">16</div><div class="lbl">Passed</div></div>
+  <div class="card"><div class="num" style="color:#f85149">1</div><div class="lbl">Failed</div></div>
+  <div class="card"><div class="num" style="color:#e3b341">3</div><div class="lbl">Warnings</div></div>
+  <div class="card"><div class="num" style="color:#8b949e">20</div><div class="lbl">Total Checks</div></div>
+</div>
+
+<div class="progress-wrap">
+  <div class="progress-bar"><div class="progress-fill" style="width:80.0%"></div></div>
+  <div class="progress-label"><span>0%</span><span>Compliance: 80.0%</span><span>100%</span></div>
+</div>
+
+<div class="container">
+  <table>
+    <thead>
+      <tr>
+        <th>CIS ID</th><th>Check Name</th><th>Status</th><th>Severity</th><th>Details & Fix</th>
+      </tr>
+    </thead>
+    <tbody>
+        <tr>
+          <td><code>CIS-5.2.8</code></td>
+          <td>SSH Root Login</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#e74c3c;font-weight:600">CRITICAL</span></td>
+          <td>PermitRootLogin is set to no in sshd_config</td>
+        </tr>
+        <tr>
+          <td><code>CIS-5.2.9</code></td>
+          <td>SSH Empty Passwords</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#3498db;font-weight:600">LOW</span></td>
+          <td>PermitEmptyPasswords is set to no in sshd_config</td>
+        </tr>
+        <tr>
+          <td><code>CIS-5.2.2</code></td>
+          <td>SSH Protocol</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#3498db;font-weight:600">LOW</span></td>
+          <td>OpenSSH installed — SSH2 protocol enforced by default</td>
+        </tr>
+        <tr>
+          <td><code>CIS-3.6.1</code></td>
+          <td>Firewall Status</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#e67e22;font-weight:600">HIGH</span></td>
+          <td>UFW firewall is active</td>
+        </tr>
+        <tr>
+          <td><code>CIS-4.1.1</code></td>
+          <td>Audit Daemon</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#e67e22;font-weight:600">HIGH</span></td>
+          <td>auditd is installed — note: WSL2 kernel limits auditd runtime but package is present and configured</td>
+        </tr>
+        <tr>
+          <td><code>CIS-6.1.2</code></td>
+          <td>/etc/passwd Permissions</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#e74c3c;font-weight:600">CRITICAL</span></td>
+          <td>Permissions are 644 — correct</td>
+        </tr>
+        <tr>
+          <td><code>CIS-6.1.3</code></td>
+          <td>/etc/shadow Permissions</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#e74c3c;font-weight:600">CRITICAL</span></td>
+          <td>Permissions are 640 — correct</td>
+        </tr>
+        <tr>
+          <td><code>CIS-6.1.10</code></td>
+          <td>World-Writable Files</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#f1c40f;font-weight:600">MEDIUM</span></td>
+          <td>No world-writable files found in critical directories</td>
+        </tr>
+        <tr>
+          <td><code>CIS-6.1.13</code></td>
+          <td>SUID/SGID Binaries</td>
+          <td><span class="badge warning">WARNING</span></td>
+          <td><span class="sev" style="color:#e67e22;font-weight:600">HIGH</span></td>
+          <td>Review these SUID binaries: /usr/lib/snapd/snap-confine, /usr/lib/polkit-1/polkit-agent-helper-1, /usr/lib/x86_64-linux-gnu/utempter/utempter<div class="fix">✦ Fix: <code>Verify each binary is intentionally SUID — remove bit if not: chmod u-s <file></code></div></td>
+        </tr>
+        <tr>
+          <td><code>CIS-5.4.1.1</code></td>
+          <td>Password Max Age</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#f1c40f;font-weight:600">MEDIUM</span></td>
+          <td>Password max age is 90 days</td>
+        </tr>
+        <tr>
+          <td><code>CIS-5.4.1</code></td>
+          <td>Password Min Length</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#f1c40f;font-weight:600">MEDIUM</span></td>
+          <td>Minimum password length is 14</td>
+        </tr>
+        <tr>
+          <td><code>CIS-1.5.1</code></td>
+          <td>Core Dumps</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#3498db;font-weight:600">LOW</span></td>
+          <td>Core dumps are restricted</td>
+        </tr>
+        <tr>
+          <td><code>CIS-5.1.2</code></td>
+          <td>Cron Permissions</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#f1c40f;font-weight:600">MEDIUM</span></td>
+          <td>/etc/cron.allow exists — cron access is restricted</td>
+        </tr>
+        <tr>
+          <td><code>CIS-5.3.1</code></td>
+          <td>Sudo Installed</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#f1c40f;font-weight:600">MEDIUM</span></td>
+          <td>sudo is installed and available</td>
+        </tr>
+        <tr>
+          <td><code>CIS-5.3.4</code></td>
+          <td>Sudo Logging</td>
+          <td><span class="badge fail">FAIL</span></td>
+          <td><span class="sev" style="color:#e67e22;font-weight:600">HIGH</span></td>
+          <td>Sudo logging not configured — privilege escalation untracked<div class="fix">✦ Fix: <code>Add 'Defaults logfile=/var/log/sudo.log' to /etc/sudoers</code></div></td>
+        </tr>
+        <tr>
+          <td><code>CIS-1.1.3</code></td>
+          <td>/tmp noexec</td>
+          <td><span class="badge warning">WARNING</span></td>
+          <td><span class="sev" style="color:#e67e22;font-weight:600">HIGH</span></td>
+          <td>/tmp may allow execution — attackers can run malicious scripts<div class="fix">✦ Fix: <code>Add 'noexec' to /tmp mount options in /etc/fstab</code></div></td>
+        </tr>
+        <tr>
+          <td><code>CIS-1.1.8</code></td>
+          <td>Sticky Bit /tmp</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#f1c40f;font-weight:600">MEDIUM</span></td>
+          <td>Sticky bit set on /tmp — users can't delete each other's files</td>
+        </tr>
+        <tr>
+          <td><code>CIS-3.3.3</code></td>
+          <td>IPv6 Status</td>
+          <td><span class="badge warning">WARNING</span></td>
+          <td><span class="sev" style="color:#3498db;font-weight:600">LOW</span></td>
+          <td>IPv6 is enabled — disable if not required<div class="fix">✦ Fix: <code>Add 'net.ipv6.conf.all.disable_ipv6=1' to /etc/sysctl.conf</code></div></td>
+        </tr>
+        <tr>
+          <td><code>CIS-1.7.4</code></td>
+          <td>MOTD Permissions</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#3498db;font-weight:600">LOW</span></td>
+          <td>/etc/motd permissions are 644</td>
+        </tr>
+        <tr>
+          <td><code>CIS-4.2.1</code></td>
+          <td>Rsyslog Service</td>
+          <td><span class="badge pass">PASS</span></td>
+          <td><span class="sev" style="color:#e67e22;font-weight:600">HIGH</span></td>
+          <td>rsyslog is active — system logs are being collected</td>
+        </tr></tbody>
+  </table>
+</div>
+
+<footer>Generated by Linux Security Compliance Scanner — Mapped to CIS Benchmark Controls — Red Hat Inspired</footer>
+</body>
+</html>

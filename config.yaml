@@ -1,0 +1,20 @@
+scanner:
+  name: "Linux Security Compliance Scanner"
+  version: "1.0.0"
+  author: "Sri Sheshaadhri R"
+
+thresholds:
+  max_world_writable_files: 0
+  max_suid_binaries_outside_usr: 0
+  allowed_open_ports: [22, 80, 443]
+
+severity:
+  critical: ["ssh_root_login", "shadow_permissions", "passwd_permissions"]
+  high: ["firewall_status", "auditd_status", "suid_binaries"]
+  medium: ["world_writable_files", "password_max_age", "password_min_len"]
+  low: ["ssh_protocol", "ssh_empty_passwords", "core_dumps"]
+
+report:
+  output_dir: "reports"
+  json_file: "compliance_report.json"
+  html_file: "compliance_report.html"
