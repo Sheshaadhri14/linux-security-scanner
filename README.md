@@ -131,4 +131,4 @@ linux-security-scanner/
 
 ## 👤 Author
 
-**Sri Sheshaadhri R** — [LinkedIn](#) | [GitHub](#)
+**Sri Sheshaadhri R** 
